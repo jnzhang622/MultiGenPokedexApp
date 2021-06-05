@@ -1,0 +1,45 @@
+package com.example.multigenpokedexapp
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.example.multigenpokedexapp.data.adapters.MainAdapter
+import com.example.multigenpokedexapp.data.api.models.PokemonResultsDTO
+import com.example.multigenpokedexapp.databinding.MainFragmentBinding
+
+class MainFragment : Fragment() {
+    private var _binding: MainFragmentBinding? = null
+    private val binding get() = _binding!!
+
+    private lateinit var viewModel: MainViewModel
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View {
+
+        _binding = MainFragmentBinding.inflate(inflater)
+        return binding.root
+    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+
+        viewModel.pokemonGenInfo.observe(viewLifecycleOwner, {
+            binding.pokemonRv.adapter =
+                MainAdapter(this@MainFragment::onPokemonClick, viewModel.pokemonGenInfo.value?.results)
+        })
+    }
+
+    private fun onPokemonClick(pokemon: PokemonResultsDTO?){
+        if (pokemon != null) {
+            viewModel.singlePokemonName = pokemon.name
+            viewModel.getSinglePokemonData()
+
+            findNavController().navigate(R.id.action_mainFragment_to_pokemonInfoFragment)
+        }
+
+    }
+}

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/genSelectFragment">
+
+    <fragment
+        android:id="@+id/genSelectFragment"
+        android:name="com.example.multigenpokedexapp.GenSelectFragment"
+        android:label="fragment_gen_select"
+        tools:layout="@layout/gen_select_fragment" >
+        <action
+            android:id="@+id/action_genSelectFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.multigenpokedexapp.MainFragment"
+        android:label="main_fragment"
+        tools:layout="@layout/main_fragment" >
+        <action
+            android:id="@+id/action_mainFragment_to_pokemonInfoFragment"
+            app:destination="@id/pokemonInfoFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_genSelectFragment"
+            app:destination="@id/genSelectFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/pokemonInfoFragment"
+        android:name="com.example.multigenpokedexapp.PokemonInfoFragment"
+        android:label="pokemon_info_fragment"
+        tools:layout="@layout/pokemon_info_fragment" >
+        <action
+            android:id="@+id/action_pokemonInfoFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+</navigation>
